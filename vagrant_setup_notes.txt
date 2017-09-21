@@ -1,0 +1,37 @@
+# the mappings of IP addresses to host names are
+# set in Windows 7 in "C:\Windows\System32\drivers\etc\hosts"
+# the file should be accessed in administrator mode
+192.168.33.10		my-vagrant.com
+
+
+# these lines should be uncommented / modified in the Vagrantfile
+config.vm.box = "ubuntu/xenial64"
+config.vm.network "private_network", ip: "192.168.33.10"
+
+# make sure the list of packages and PPAs (personal package archives) are up to date
+sudo apt-get update
+
+# htop
+sudo apt install htop
+
+# nginx
+sudo apt install nginx
+sudo systemctl enable nginx.service
+sudo systemctl start nginx.service
+# sudo systemctl stop nginx.service
+
+# postgresql 9.5
+sudo apt install postgresql
+
+# elixir
+sudo wget https://packages.erlang-solutions.com/erlang-solutions_1.0_all.deb && sudo dpkg -i erlang-solutions_1.0_all.deb
+sudo apt-get update
+sudo apt-get install esl-erlang
+sudo apt-get install elixir
+sudo rm erlang-solutions_1.0_all.deb
+
+# phoenix
+sudo apt-get install inotify-tools
+mix local.hex
+mix archive.install https://github.com/phoenixframework/archives/raw/master/phx_new.ez
+mix phx.new thenameofmywebapp --no-brunch --no-ecto
